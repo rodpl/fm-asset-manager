@@ -1,7 +1,5 @@
 """InvokeAI node for preparing Football Manager kit assets."""
 
-from __future__ import annotations
-
 from typing import Optional
 
 from invokeai.app.invocations.baseinvocation import (

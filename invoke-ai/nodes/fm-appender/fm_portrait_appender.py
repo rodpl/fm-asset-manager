@@ -19,7 +19,10 @@ class FMPortraitAppenderOutput(BaseInvocationOutput):
     saved_portrait_path: str = OutputField(
         description="Absolute path to the relocated portrait image."
     )
-    fm_id: str = OutputField(description="Football Manager identifier used for naming.")
+    fm_id: str = OutputField(
+        title="FM Person ID",
+        description="Football Manager identifier used for naming.",
+    )
 
 
 @invocation(
@@ -49,10 +52,8 @@ class FMPortraitAppenderInvocation(BaseInvocation):
 
     def invoke(self, context: InvocationContext) -> FMPortraitAppenderOutput:
         context.logger.info(
-            "FM Portrait Appender invoked with image=%s, fm_id=%s, target=%s",
-            self.image_path,
-            self.fm_id,
-            self.fm_folder_path,
+            f"FM Portrait Appender invoked with image={self.image_path}, "
+            f"fm_id={self.fm_id}, target={self.fm_folder_path}"
         )
 
         destination = move_asset(
@@ -61,7 +62,7 @@ class FMPortraitAppenderInvocation(BaseInvocation):
             dest_stem=self.fm_id,
         )
 
-        context.logger.info("Portrait moved to %s", destination)
+        context.logger.info(f"Portrait moved to {destination}")
 
         return FMPortraitAppenderOutput(
             saved_portrait_path=str(destination),

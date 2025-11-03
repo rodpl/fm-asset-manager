@@ -1,7 +1,5 @@
 """InvokeAI node for preparing Football Manager logo assets."""
 
-from __future__ import annotations
-
 from typing import Optional
 
 from invokeai.app.invocations.baseinvocation import (
@@ -65,11 +63,9 @@ class FMLogoAppenderInvocation(BaseInvocation):
 
     def invoke(self, context: InvocationContext) -> FMLogoAppenderOutput:
         context.logger.info(
-            "FM Logo Appender invoked with normal_logo=%s, small_logo=%s, fm_id=%s, target=%s",
-            self.normal_logo_path,
-            self.small_logo_path,
-            self.fm_id,
-            self.fm_folder_path,
+            f"FM Logo Appender invoked with normal_logo={self.normal_logo_path}, "
+            f"small_logo={self.small_logo_path}, fm_id={self.fm_id}, "
+            f"target={self.fm_folder_path}"
         )
 
         if not self.normal_logo_path and not self.small_logo_path:
@@ -89,9 +85,9 @@ class FMLogoAppenderInvocation(BaseInvocation):
         )
 
         if normal_destination:
-            context.logger.info("Standard logo moved to %s", normal_destination)
+            context.logger.info(f"Standard logo moved to {normal_destination}")
         if small_destination:
-            context.logger.info("Small logo moved to %s", small_destination)
+            context.logger.info(f"Small logo moved to {small_destination}")
 
         return FMLogoAppenderOutput(
             saved_logo_path=str(normal_destination) if normal_destination else None,
