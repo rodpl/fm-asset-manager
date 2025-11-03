@@ -1,7 +1,5 @@
 """InvokeAI node for preparing Football Manager portrait assets."""
 
-from __future__ import annotations
-
 from invokeai.app.invocations.baseinvocation import (
     BaseInvocation,
     BaseInvocationOutput,
@@ -21,12 +19,7 @@ class FMPortraitAppenderOutput(BaseInvocationOutput):
     saved_portrait_path: str = OutputField(
         description="Absolute path to the relocated portrait image."
     )
-    football_manager_id: str = OutputField(
-        description="Identifier used to name the portrait file."
-    )
-    target_folder_path: str = OutputField(
-        description="Destination directory used for the portrait."
-    )
+    fm_id: str = OutputField(description="Football Manager identifier used for naming.")
 
 
 @invocation(
@@ -47,7 +40,7 @@ class FMPortraitAppenderInvocation(BaseInvocation):
         description="Football Manager unique identifier for the person portrait.",
     )
     fm_folder_path: str = InputField(
-        title="Portrait Folder Path",
+        title="FM Folder Path",
         description=(
             "Football Manager graphics folder that should receive the portrait "
             "image."
@@ -72,6 +65,5 @@ class FMPortraitAppenderInvocation(BaseInvocation):
 
         return FMPortraitAppenderOutput(
             saved_portrait_path=str(destination),
-            football_manager_id=self.fm_id,
-            target_folder_path=self.fm_folder_path,
+            fm_id=self.fm_id,
         )
